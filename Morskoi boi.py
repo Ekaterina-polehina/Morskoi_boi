@@ -1,3 +1,14 @@
+class BoardException(Exception):
+    pass
+
+class BoardOutException(BoardException):
+    def __str__(self):
+        return "Вы пытаетесь выстрелить за доску!"
+class BoardUsedException(BoardException):
+    def __str__(self):
+        return "Вы уже стреляли в эту клетку!"
+class BoardWrongShipException(BoardException):
+    pass
 class Dot:
     def __init__(self, x, y):
         self.x = x
@@ -7,16 +18,30 @@ class Dot:
 
     def __repr__(self):
         return f"Dot({self.x}, {self.y})"
-class BoardException(Exception):
-    pass
+class Ship:
+    def __init__(self, bow, l, o):
+        self.bow = bow
+        self.l = l
+        self.o = o
+        self.lives = l
 
-class BoardOutException(BoardException):
-    def __str__(self):
-        return "Вы пытаетесь выстрелить за доску!"
-class BoardUserException(BoardException):
-    def __str__(self):
-        return "Вы уже стреляли в эту клетку!"
-class BoardWrongShipException(BoardException):
-    pass
+    @property
+    def dots(self):
+        ship_dots = []
+        for i in range(self.l):
+            cur_x = self.bow.x
+            cur_y = self.bow.y
+
+            if self.o == 0:
+                cur_x += i
+            elif self.o == 1:
+                cur_y += i
+
+            ship_dots.append(Dot(cur_x, cur_y))
+        return ship_dots
+
+    def shooten(self, shot):
+        return shot in self.dots
+
 
 
