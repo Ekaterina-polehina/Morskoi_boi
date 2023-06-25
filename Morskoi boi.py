@@ -248,8 +248,16 @@ class Game:
                 print("Пользователь выиграл!")
                 break
 
-            if self.us.board.count == 7:
+            if self.us.board.defeat():
                 print("-" * 20)
                 print("Компьтер выиграл!")
                 break
             num += 1
+
+    def start(self):
+        self.greet()
+        self.loop()
+
+
+g = Game()
+g.start()
